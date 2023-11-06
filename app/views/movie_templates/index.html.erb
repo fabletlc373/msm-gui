@@ -4,6 +4,38 @@
 
 <hr>
 
+
+<form action="/insert_movie" method="post">
+  <div>
+  <label for="title_field">Title</label>
+  <input id="title_field" name="movie_title">
+	</div>
+  <div>
+  <label for="year_field">Year</label>
+  <input id="year_field" name="movie_year" type="text">
+  </div>
+  <div>
+  <label for="dur_field">Duration</label>
+  <input id='dur_field' name='movie_dur' type='text'>
+  </div>
+  <div>
+  <label for="desc_field">Description</label>
+  <input id='desc_field' name='movie_desc' type='text' rows='3'>
+  </div>
+  <div>
+  <label for="img_field">Image</label>
+  <input id='img_field' name='movie_img' type='text'>
+  </div>
+  
+  <div>
+  <label for="dir_field">Director ID</label>
+  <input id='dir_field' name='movie_dir' type='text' value=''>
+  </div>
+  
+  
+  <button>Create movie</button>	
+</form>
+
 <table border="1">
   <tr>
     <th>
@@ -49,7 +81,7 @@
     </td>
 
     <td>
-      <% matching_directors = Director.where({ :id => a_movie.director_id }) %>
+      <% matching_directors = Director.where.not({ :id => nil }).where({ :id => a_movie.director_id }) %>
       
       <% the_director = matching_directors.at(0) %>
 

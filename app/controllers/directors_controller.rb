@@ -6,7 +6,7 @@ class DirectorsController < ApplicationController
     render({ :template => "director_templates/index" })
   end
 
-  def add_index
+  def add_director
     addname = params.fetch('dir_name')
     adddob = params.fetch('dir_dob')
     addbio = params.fetch('dir_bio')
@@ -17,13 +17,39 @@ class DirectorsController < ApplicationController
     newdir.name = addname
     newdir.dob = adddob
     newdir.bio = addbio
+    newdir.created_at = DateTime.now
+    newdir.updated_at = DateTime.now
 
     newdir.save
     
-    matching_directors = Director.all
-    @list_of_directors = matching_directors.order({ :created_at => :desc })
+    redirect_to("/directors")
+  end
+  
+  def delete_director
+    dirid = params.fetch('path_id')
+    dir = Director.where({:id => dirid}).first
+    dir.destroy
+    redirect_to("/directors")
+  end
 
-    render({ :template => "director_templates/index" })
+  def modify_director
+    dirid = params.fetch('path_id')
+    addname = params.fetch('dir_name')
+    adddob = params.fetch('dir_dob')
+    addbio = params.fetch('dir_bio')
+    addimg = params.fetch('dir_img')
+
+    dir = Director.where({:id => dirid}).first
+
+    dir.image = addimg
+    dir.name = addname
+    dir.dob = adddob
+    dir.bio = addbio
+    dir.updated_at = DateTime.now
+
+    dir.save
+
+    redirect_to("/directors/#{dirid}")
   end
 
 

@@ -2,10 +2,46 @@
   Movie #<%= @the_movie.id %> details
 </h1>
 
+<div>
 <a href="/movies">
   Go back
 </a>
+</div>
 
+<div>
+<a href="/delete_movie/<%= @the_movie.id %>">
+  Delete movie
+</a>
+</div>
+
+<hr>
+<form action="/modify_movie/<%=@the_movie.id%>" method="post">
+  <div>
+  <label for="title_field">Name</label>
+  <input id="title_field" name="movie_title" value="<%= @the_movie.title %>">
+	</div>
+  <div>
+  <label for="year_field">Dob</label>
+  <input id="year_field" name="movie_year" value="<%= @the_movie.year %>">
+  </div>
+  <div>
+  <label for="dur_field">Bio</label>
+  <input id='dur_field' name='movie_dur' type='text' value="<%= @the_movie.duration %>">
+  </div>
+  <div>
+  <label for="desc_field">Description</label>
+  <input id='desc_field' name='movie_desc' type='text' rows='3' value="<%= @the_movie.description %>">
+  </div>
+  <div>
+  <label for="img_field">Image</label>
+  <input id='img_field' name='movie_img' type='text' value="<%= @the_movie.image %>">
+  </div>
+  <div>
+  <label for="dir_field">Director ID</label>
+  <input id='dir_field' name='movie_dir' type='text' value="<%= @the_movie.director_id %>">
+  </div>
+  <button>Update movie</button>	
+</form>
 <hr>
 
 <dl>
@@ -54,7 +90,12 @@
     
     <% the_director = matching_directors.at(0) %>
 
-    <%= the_director.name %>
+    <% if the_director.nil?
+      dname=''
+    else 
+      dname=the_director.name 
+    end%>
+    <%=dname%>
   </dd>
 
   <dt>
